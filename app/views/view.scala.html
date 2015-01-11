@@ -1,0 +1,52 @@
+@(ownPictures : List[Picture], userPictures : List[Picture], form: Form[Application.InputForm])
+
+@welcome{
+    <div class="container">
+        <div class="starter-template">
+            <h2>Betrachte deine Bilder:</h2>
+        </div>
+        <div id="images" class="row">
+            @for(ownPic <- ownPictures){
+                <div class="col-md-3 col-sm-4 col-xs-6">
+                    <img src="@{routes.Pictures.getImage(ownPic.getId)}" class="img-responsive"/>
+                    <h4 class="caption">@ownPic.getName</h4>
+                    <p>@ownPic.getDescription</p>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="starter-template">
+            <h2>Betrachte öffentliche Bilder anderer Benutzer:</h2>
+        </div>
+        @helper.form(routes.Application.view()) {
+            @helper.inputText(form("username"), 'class -> "form-control", 'type -> "text", '_label -> "Benutzername:")
+            <button type="submit" class="btn btn-default" >Benutzer suchen</button>
+        }
+
+        <br/>
+        <br/>
+        <br/>
+
+        <div id="images2" class="row">
+        @for(userPic <- userPictures){
+            <div class="col-md-3 col-sm-4 col-xs-6">
+                <img src="@{routes.Pictures.getImage(userPic.getId)}" class="img-responsive"/>
+                <h4 class="caption">@userPic.getName</h4>
+                <p>@userPic.getDescription</p>
+            </div>
+        }
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+}
